@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,7 +13,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <style>
         body {
@@ -25,86 +25,120 @@
         }
     </style>
 </head>
-<body id="app-layout">
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
+<body id="app-layout" style="background-color: #fcf8e3">
+    <div style="width: 1280px; margin: 0 auto; background-color: white">
+        <div>
+            <img src="{{ asset('img/header.png') }}" />
+        </div>
+        <nav class="navbar navbar-blue">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarEexample">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
 
-                <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    Laravel
-                </a>
+                <div class="collapse navbar-collapse" id="navbarEexample">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">このサイトについて</a></li>
+                        <li><a href="#">講師紹介</a></li>
+                        <li><a href="#">課程費用</a></li>
+                        <li><a href="#">レッスンの流れ</a></li>
+                        <li><a href="#">Skype使用方法</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">お問い合わせ</a></li>
+                    </ul>
+                </div>
             </div>
+        </nav>
+        <nav class="navbar navbar-default navbar-static-top" style="display: none">
+            <div class="container">
+                <div class="navbar-header">
 
-            <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">{{ trans('nabvar.home') }}</a></li>
-                </ul>
+                    <!-- Collapsed Hamburger -->
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+                        <span class="sr-only">Toggle Navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
 
-                <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->
-                    @if (Auth::guest())
-                        @if (!Request::is('login'))
-                            <li><a href="{{ url('/login') }}">{{ trans('nabvar.login') }}</a></li>
+                    <!-- Branding Image -->
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        Laravel
+                    </a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="nav navbar-nav">
+                        <li><a href="{{ url('/home') }}">{{ trans('nabvar.home') }}</a></li>
+                    </ul>
+
+                    <!-- Right Side Of Navbar -->
+                    <ul class="nav navbar-nav navbar-right">
+                        <!-- Authentication Links -->
+                        @if (Auth::guest())
+                            @if (!Request::is('login'))
+                                <li><a href="{{ url('/login') }}">{{ trans('nabvar.login') }}</a></li>
+                            @endif
+                            @if (!Request::is('register'))
+                                <li><a href="{{ url('/register') }}">{{ trans('nabvar.register') }}</a></li>
+                            @endif
+                        @else
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                </ul>
+                            </li>
                         @endif
-                        @if (!Request::is('register'))
-                            <li><a href="{{ url('/register') }}">{{ trans('nabvar.register') }}</a></li>
-                        @endif
-                    @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                {{ trans('nabvar.lang_menu') }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                <li>
+                                    <a href="{{ route('lang.switch', 'ja') }}">
+                                        @if (App::getLocale() == "ja")
+                                            <i class="fa fa-btn fa-check"></i>
+                                        @else
+                                            <i class="fa fa-btn" style="width: 14px"></i>
+                                        @endif
+                                        {{ trans('nabvar.lang_menu_japanese') }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('lang.switch', 'en') }}">
+                                        @if (App::getLocale() == "en")
+                                            <i class="fa fa-btn fa-check"></i>
+                                        @else
+                                            <i class="fa fa-btn" style="width: 14px"></i>
+                                        @endif
+                                        {{ trans('nabvar.lang_menu_english') }}
+                                    </a>
+                                </li>
                             </ul>
                         </li>
-                    @endif
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            {{ trans('nabvar.lang_menu') }} <span class="caret"></span>
-                        </a>
-
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="{{ route('lang.switch', 'ja') }}">
-                                    @if (App::getLocale() == "ja")
-                                        <i class="fa fa-btn fa-check"></i>
-                                    @else
-                                        <i class="fa fa-btn" style="width: 14px"></i>
-                                    @endif
-                                    {{ trans('nabvar.lang_menu_japanese') }}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('lang.switch', 'en') }}">
-                                    @if (App::getLocale() == "en")
-                                        <i class="fa fa-btn fa-check"></i>
-                                    @else
-                                        <i class="fa fa-btn" style="width: 14px"></i>
-                                    @endif
-                                    {{ trans('nabvar.lang_menu_english') }}
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    @yield('content')
+        @yield('content')
+
+        <div>
+            <img src="{{ asset('img/footer.png') }}" />
+        </div>
+
+    </div>
 
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>

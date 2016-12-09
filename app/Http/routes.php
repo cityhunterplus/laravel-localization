@@ -29,3 +29,5 @@ Route::get('articles', 'ArticlesController@index')->name('articles.index');
 Route::get('articles/create', 'ArticlesController@create')->name('articles.create');
 //Route::get('articles/{id}', 'ArticlesController@show');
 Route::post('articles', 'ArticlesController@store')->name('articles.store');
+
+Route::get('teachers/show', 'TeachersController@show')->name('teachers.show');
